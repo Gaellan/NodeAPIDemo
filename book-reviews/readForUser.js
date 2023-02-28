@@ -3,9 +3,9 @@ const sequelize = new Sequelize({
     dialect : "sqlite",
     storage : "./database.sqlite3"
 });
-const checkRoute = require('../routing.js');
 
-module.exports = function(req, res) {
+module.exports = function(req,res) {
+
     const Book = sequelize.define("book", {
         title: DataTypes.TEXT,
         description: DataTypes.TEXT,
@@ -39,6 +39,21 @@ module.exports = function(req, res) {
 
     (async () => {
         await sequelize.sync({ force: false });
-        checkRoute(req, res);
+        try {
+            let id = req.url.split("/")[2];
+            BookReview.findAll(
+                {
+                    raw: true,
+                    where : {
+                        userId : id
+                    }
+                }).then((data) => {
+                res.writeHead(200, { "Content-Type": "application/json" });
+                res.end(JSON.stringify(data));
+            });
+        } catch (error) {
+            res.writeHead(500, { "Content-Type": "application/json" });
+            res.end(JSON.stringify(error));
+        }
     })();
 }
