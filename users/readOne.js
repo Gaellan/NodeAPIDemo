@@ -18,6 +18,10 @@ module.exports = function(req,res) {
         lastName : DataTypes.TEXT,
         email : DataTypes.TEXT,
         password : DataTypes.TEXT,
+        role : {
+            type : DataTypes.TEXT,
+            defaultValue : "USER"
+        }
     });
 
     Book.hasMany(User);
@@ -44,6 +48,7 @@ module.exports = function(req,res) {
                     lastName : data.lastName,
                     email : data.email,
                     password : data.password,
+                    role : data.role,
                     favoriteBook : {
                         id : data['book.id'],
                         title : data['book.title'],

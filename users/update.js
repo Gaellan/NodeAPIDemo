@@ -18,6 +18,10 @@ module.exports = function(req,res) {
         lastName : DataTypes.TEXT,
         email : DataTypes.TEXT,
         password : DataTypes.TEXT,
+        role : {
+            type : DataTypes.TEXT,
+            defaultValue : "USER"
+        }
     });
 
     Book.hasMany(User);
