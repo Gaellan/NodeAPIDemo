@@ -9,6 +9,7 @@ const readAllUsers = require("./users/readAll.js");
 const readOneUser = require("./users/readOne.js");
 const updateUser = require("./users/update.js");
 const deleteUser = require("./users/delete.js");
+const promoteUser = require("./users/promote.js");
 
 module.exports = function(req, res) {
     if(req.url === "/books" && req.method === "POST") {
@@ -50,5 +51,9 @@ module.exports = function(req, res) {
     else if (req.url.match(/\/users\/\d+/) && req.method === "DELETE") {
         // delete the user with the specified id
         deleteUser(req, res);
+    }
+    else if (req.url.match(/^\/users\/\d+\/promote$/) && req.method === "POST") {
+        // delete the user with the specified id
+        promoteUser(req, res);
     }
 }
