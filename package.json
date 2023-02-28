@@ -1,0 +1,24 @@
+{
+  "name": "nodedemo",
+  "version": "1.0.0",
+  "description": "A demonstration of a basic API using Node.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "test",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Gaellan/NodeDemo.git"
+  },
+  "author": "Gaellan",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/Gaellan/NodeDemo/issues"
+  },
+  "homepage": "https://github.com/Gaellan/NodeDemo#readme",
+  "dependencies": {
+    "sequelize": "^6.29.0",
+    "sqlite3": "^5.1.4"
+  }
+}
