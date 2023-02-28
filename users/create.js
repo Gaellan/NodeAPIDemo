@@ -1,4 +1,5 @@
 const { Sequelize, Model, DataTypes } = require("sequelize");
+const  bcrypt  = require("bcrypt");
 const sequelize = new Sequelize({
     dialect : "sqlite",
     storage : "./database.sqlite3"
@@ -64,6 +65,31 @@ module.exports = function(req,res) {
                                     }
                                 }).then((data) => {
                                     userData.bookId = data[0].id;
+                                    bcrypt.hash(userData.password, 10)
+                                        .then(hash => {
+                                            userData.password = hash;
+                                            // Store hash in the database
+                                            User.create(userData).then((data) => {
+
+                                                User.findAll({ raw: true }).then((data) => {
+                                                    res.writeHead(200, { "Content-Type": "application/json" });
+                                                    res.end(JSON.stringify(data));
+                                                });
+                                            });
+                                        })
+                                        .catch(err => {
+                                            console.log(err)
+                                        });
+                                });
+                            });
+                        }
+                        else
+                        {
+                            userData.bookId = data[0].id;
+                            bcrypt.hash(userData.password, 10)
+                                .then(hash => {
+                                    userData.password = hash;
+                                    // Store hash in the database
                                     User.create(userData).then((data) => {
 
                                         User.findAll({ raw: true }).then((data) => {
@@ -71,22 +97,11 @@ module.exports = function(req,res) {
                                             res.end(JSON.stringify(data));
                                         });
                                     });
+                                })
+                                .catch(err => {
+                                    console.log(err)
                                 });
-                            });
                         }
-                        else
-                        {
-                            userData.bookId = data[0].id;
-                            User.create(userData).then((data) => {
-
-                                User.findAll({ raw: true }).then((data) => {
-                                    res.writeHead(200, { "Content-Type": "application/json" });
-                                    res.end(JSON.stringify(data));
-                                });
-                            });
-                        }
-                    res.writeHead(200, { "Content-Type": "application/json" });
-                    res.end(JSON.stringify(data));
                 });
             });
         } catch (error) {
