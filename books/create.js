@@ -28,6 +28,7 @@ module.exports = function(req,res) {
                 Book.create(JSON.parse(body)).then((data) => {
 
                     Book.findAll({ raw: true }).then((data) => {
+                        res.setHeader('Access-Control-Allow-Origin', '*');
                         res.writeHead(200, { "Content-Type": "application/json" });
                         res.end(JSON.stringify(data));
                     });

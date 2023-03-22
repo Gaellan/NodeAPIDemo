@@ -17,6 +17,7 @@ module.exports = function(req,res) {
         await sequelize.sync({ force: false });
         try {
             Book.findAll({ raw: true }).then((data) => {
+                res.setHeader('Access-Control-Allow-Origin', '*');
                 res.writeHead(200, { "Content-Type": "application/json" });
                 res.end(JSON.stringify(data));
             });

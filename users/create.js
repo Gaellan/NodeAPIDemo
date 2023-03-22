@@ -76,6 +76,7 @@ module.exports = function(req,res) {
                                             User.create(userData).then((data) => {
 
                                                 User.findAll({ raw: true }).then((data) => {
+                                                    res.setHeader('Access-Control-Allow-Origin', '*');
                                                     res.writeHead(200, { "Content-Type": "application/json" });
                                                     res.end(JSON.stringify(data));
                                                 });

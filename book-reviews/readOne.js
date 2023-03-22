@@ -70,6 +70,7 @@ module.exports = function(req,res) {
                         lastName : data['user.lastName']
                     }
                 }
+                res.setHeader('Access-Control-Allow-Origin', '*');
                 res.writeHead(200, { "Content-Type": "application/json" });
                 res.end(JSON.stringify(item));
             });
